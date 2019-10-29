@@ -1,11 +1,17 @@
 package pro.com.measure.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Document
 public class Measurement1 {
 
+    @Id
     private String id;
+
     private LocalDateTime dateTime;
     private float pick;
     private String desc;
