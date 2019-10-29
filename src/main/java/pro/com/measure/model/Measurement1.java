@@ -34,9 +34,6 @@ public class Measurement1 {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
