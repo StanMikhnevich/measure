@@ -12,8 +12,8 @@ mvn clean package
 echo ''
 echo 'Copying app to destination server...'
 echo ''
-scp -P 2222 ./target/measure-0.0.1-SNAPSHOT.jar bvh@$SERVER:/home/bvh/mednean_$1
+scp -P 2222 ./target/measure-0.0.1-SNAPSHOT.jar bvh@$SERVER:/home/bvh/measure
 
 echo ''
 echo 'Enter password for remotely RESTART server'
-ssh -tt bvh@$SERVER -p 2222 "sudo systemctl stop mednean_$1.service;sudo mv /home/bvh/mednean_$1/elqueue.out /home/bvh/mednean_$1/elqueue.bak;sudo systemctl start mednean_$1.service;exit"
+ssh -tt bvh@$SERVER -p 2222 "sudo systemctl stop measure.service;sudo mv /home/bvh/measure/elqueue.out /home/bvh/measure/elqueue.bak;sudo systemctl start measure.service;exit"
