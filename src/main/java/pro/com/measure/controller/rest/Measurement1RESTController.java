@@ -26,7 +26,6 @@ public class Measurement1RESTController {
     @RequestMapping("/create/{pick}")
     Measurement1 create(@PathVariable("pick") float pick){
         Measurement1 m1 = new Measurement1(LocalDateTime.now(),pick);
-        System.out.println("Controller REST  CREATE called");
 
         return service.create(m1);
     }
