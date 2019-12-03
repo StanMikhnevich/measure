@@ -21,12 +21,14 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
 
     @PostConstruct
     void init(){
-        repository.deleteAll();
+      /*  repository.deleteAll();
         measures.add(new Measurement1(LocalDateTime.now().minusSeconds(1), 12.2f));
         measures.add(new Measurement1(LocalDateTime.now(), 12.1f));
         measures.add(new Measurement1(LocalDateTime.now().plusSeconds(1), 12.2f));
         measures.add(new Measurement1(LocalDateTime.now().plusSeconds(2), 12.2f));
-        repository.saveAll(measures);
+       repository.saveAll(measures);
+
+      */
     }
 
 
