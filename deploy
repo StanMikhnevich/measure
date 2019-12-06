@@ -1,7 +1,6 @@
 #!/bin/bash
 
-SERVER=185.189.185.80
-
+SERVER=admin.mednean.com.ua
 
 echo ''
 echo 'Building Back-end...'
@@ -16,4 +15,4 @@ scp -P 2222 ./target/measure-0.0.1-SNAPSHOT.jar bvh@$SERVER:/home/bvh/measure
 
 echo ''
 echo 'Enter password for remotely RESTART server'
-ssh -tt bvh@$SERVER -p 2222 "sudo systemctl stop measure.service;sudo mv /home/bvh/measure/measure.out /home/bvh/measure/measure.bak;sudo systemctl start measure.service;exit"
+ssh -tt bvh@$SERVER -p 2222 "sudo systemctl restart measure.service"
