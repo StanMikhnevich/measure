@@ -1,0 +1,10 @@
+SERVER=admin.mednean.com.ua
+
+rm -R ./dump
+rm ./dump.tar.gz
+
+ssh -tt bvh@$SERVER -p 2222 'cd /home/bvh;rm -R dump;rm dump.tar.gz;mongodump -d measures;mongodump ;tar -zcvf dump.tar.gz dump;exit'
+scp -P 2222 bvh@$SERVER:/home/bvh/dump.tar.gz ./
+
+tar -zxvf dump.tar.gz 
+mongorestore --drop
