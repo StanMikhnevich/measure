@@ -10,5 +10,7 @@ public interface IMeasurement1Service {
     Measurement1 delete(String id);
     Measurement1 update(Measurement1 measure);
     List<Measurement1> getAll();
+    List<Measurement1> getAllByDateAndHour(int year, int month, int day, int hour);
+    List<Measurement1> getAllForLastHour();
 
 }

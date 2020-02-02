@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class Measurement1ServiceImpl implements IMeasurement1Service {
@@ -59,4 +60,30 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
     public List<Measurement1> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Measurement1> getAllByDateAndHour(int year, int month, int day, int hour) {
+        LocalDateTime from = LocalDateTime.of(year, month, day, hour,0);
+        return getAll().stream().filter(item-> item.getDateTime().isAfter(from))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Measurement1> getAllForLastHour() {
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime from = LocalDateTime.of(
+                now.getYear(),
+                now.getMonth(),
+                now.getDayOfMonth(),
+                now.getHour(),
+                0
+        );
+/*
+        return this.getAll().stream().filter(item-> item.getDateTime().isAfter(from))
+                .collect(Collectors.toList());
+     */
+        return this.repository.findAllByDateTimeAfter(from);
+    }
+
 }
