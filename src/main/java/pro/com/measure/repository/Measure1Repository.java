@@ -12,4 +12,5 @@ public interface Measure1Repository
         extends MongoRepository<Measurement1, String> {
 
     List<Measurement1> findAllByDateTimeAfter(LocalDateTime time);
+    List<Measurement1> findAllByDateTimeBetween(LocalDateTime start, LocalDateTime finish);
 }

@@ -9,7 +9,12 @@
 </head>
 <body>
 
-    <h3>Measurements</h3>
+    <h3>Измерения за текущий час</h3>
+    <br>
+    <a href="/measure/list/hour/previous" type="button" > Previous </a>
+     ______________________
+    <a href="/measure/list/hour/next" type="button" > Next </a>
+    <br>
     <br>
     <div>
 

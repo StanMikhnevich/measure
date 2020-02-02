@@ -7,6 +7,8 @@ import pro.com.measure.repository.Measure1Repository;
 import pro.com.measure.service.measurement1.interfaces.IMeasurement1Service;
 
 import javax.annotation.PostConstruct;
+import java.lang.management.ThreadInfo;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +22,23 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
     @Autowired
     Measure1Repository repository;
 
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+
+
     @PostConstruct
     void init(){
-      /*  repository.deleteAll();
-        measures.add(new Measurement1(LocalDateTime.now().minusSeconds(1), 12.2f));
-        measures.add(new Measurement1(LocalDateTime.now(), 12.1f));
-        measures.add(new Measurement1(LocalDateTime.now().plusSeconds(1), 12.2f));
-        measures.add(new Measurement1(LocalDateTime.now().plusSeconds(2), 12.2f));
-       repository.saveAll(measures);
-
-      */
+        this.initialize();
     }
 
+    private void initialize(){
+        this.setYear(LocalDate.now().getYear());
+        this.setMonth(LocalDate.now().getMonthValue());
+        this.setDay(LocalDate.now().getDayOfMonth());
+        this.setHour(LocalDateTime.now().getHour());
+    }
 
     @Override
     public Measurement1 create(Measurement1 measure) {
@@ -62,28 +69,73 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
     }
 
     @Override
-    public List<Measurement1> getAllByDateAndHour(int year, int month, int day, int hour) {
-        LocalDateTime from = LocalDateTime.of(year, month, day, hour,0);
-        return getAll().stream().filter(item-> item.getDateTime().isAfter(from))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Measurement1> getAllForLastHour() {
-
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime from = LocalDateTime.of(
-                now.getYear(),
-                now.getMonth(),
-                now.getDayOfMonth(),
-                now.getHour(),
-                0
-        );
-/*
-        return this.getAll().stream().filter(item-> item.getDateTime().isAfter(from))
-                .collect(Collectors.toList());
-     */
+    public List<Measurement1> getAllForTheCurrentHour() {
+        this.initialize();
+        LocalDateTime from = LocalDateTime.now().withMinute(0).withSecond(0);
         return this.repository.findAllByDateTimeAfter(from);
     }
 
+    @Override
+    public List<Measurement1> getAllForTheHour(LocalDateTime time) {
+        LocalDateTime start = time;
+        LocalDateTime finish = time.withHour(this.getHour() +1);
+        System.out.println(start);
+        System.out.println(finish);
+        return repository.findAllByDateTimeBetween(start, finish);
+    }
+
+    public List<Measurement1> getAllForPreviousHour(){
+        this.setHour(this.getHour() - 1);
+        LocalDateTime time = LocalDateTime.of(this.getYear(),
+                this.getMonth(),
+                this.getDay(),
+                this.getHour(),
+                0,
+                0);
+        System.out.println(this.getHour());
+        return this.getAllForTheHour(time);
+    }
+
+    public List<Measurement1> getAllForNextHour(){
+        this.setHour(this.getHour() + 1);
+        LocalDateTime time = LocalDateTime.of(this.getYear(),
+                this.getMonth(),
+                this.getDay(),
+                this.getHour(),
+                0,
+                0);
+        return this.getAllForTheHour(time);
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
 }
