@@ -77,10 +77,13 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
 
     @Override
     public List<Measurement1> getAllForTheHour(LocalDateTime time) {
+        this.setYear(time.getYear());
+        this.setMonth(time.getMonthValue());
+        this.setDay(time.getDayOfMonth());
+        this.setHour(time.getHour());
         LocalDateTime start = time;
         LocalDateTime finish = time.withHour(this.getHour() +1);
-        System.out.println(start);
-        System.out.println(finish);
+
         return repository.findAllByDateTimeBetween(start, finish);
     }
 
@@ -92,7 +95,6 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
                 this.getHour(),
                 0,
                 0);
-        System.out.println(this.getHour());
         return this.getAllForTheHour(time);
     }
 

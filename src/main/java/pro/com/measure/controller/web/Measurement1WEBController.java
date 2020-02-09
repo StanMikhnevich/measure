@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pro.com.measure.form.InputHourForm;
 import pro.com.measure.model.Measurement1;
 import pro.com.measure.service.measurement1.impls.Measurement1ServiceImpl;
 
@@ -71,5 +72,21 @@ public class Measurement1WEBController {
       //  System.out.println("CALLED index2");
         return "index2";
     }
+
+
+    @RequestMapping(value = "/list/pick", method = RequestMethod.GET)
+    public String pickHour(Model model)
+    {
+        InputHourForm inputHourForm = new InputHourForm(
+                LocalDateTime.now().getYear(),
+                LocalDateTime.now().getMonthValue(),
+                LocalDateTime.now().getDayOfMonth(),
+                LocalDateTime.now().getHour()
+        );
+        model.addAttribute("inputForm", inputHourForm);
+        return "pickanhour";
+    }
+
+
 
 }
