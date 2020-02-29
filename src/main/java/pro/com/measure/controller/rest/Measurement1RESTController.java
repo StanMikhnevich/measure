@@ -39,5 +39,32 @@ public class Measurement1RESTController {
         return service.getAllForTheCurrentHour();
     }
 
-   ////   /api/measure/list/hour/current
+    //  returns data for the given hour
+    @RequestMapping(value = "/list/{year}/{month}/{day}/{hour}", method = RequestMethod.GET)
+    List<Measurement1>  showForHour(
+            @PathVariable(value = "year")int year
+            , @PathVariable(value = "month")int month
+            , @PathVariable(value = "day")int day
+            , @PathVariable(value = "hour")int hour
+    ){
+        LocalDateTime start = LocalDateTime.of(year,month,day,hour,0,0);
+        return service.getAllForTheHour(start);
+    }
+
+    // returns data  between  two  dates
+    @RequestMapping(value = "/list/{fromyear}/{frommonth}/{fromday}/{fromhour}/{toyear}/{tomonth}/{today}/{tohour}", method = RequestMethod.GET)
+    List<Measurement1>  showForPeriod(
+            @PathVariable(value = "fromyear")int year
+            , @PathVariable(value = "frommonth")int month
+            , @PathVariable(value = "fromday")int day
+            , @PathVariable(value = "fromhour")int hour
+            , @PathVariable(value = "toyear")int toYear
+            , @PathVariable(value = "tomonth")int toMonth
+            , @PathVariable(value = "today")int toDay
+            , @PathVariable(value = "tohour")int toHour
+    ){
+        LocalDateTime start = LocalDateTime.of(year,month,day,hour,0,0);
+        LocalDateTime finish = LocalDateTime.of(toYear,toMonth,toDay,toHour ,0,0);
+        return service.getAllForThePeriod(start,finish);
+    }
 }
