@@ -87,6 +87,10 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
         return repository.findAllByDateTimeBetween(start, finish);
     }
 
+    public List<Measurement1> getAllForThePeriod(LocalDateTime start,  LocalDateTime finish) {
+        return repository.findAllByDateTimeBetween(start, finish);
+    }
+
     public List<Measurement1> getAllForPreviousHour(){
 
         this.setHour(this.getHour() - 1);
