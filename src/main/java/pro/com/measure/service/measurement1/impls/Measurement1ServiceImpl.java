@@ -33,7 +33,7 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
         this.initialize();
     }
 
-    private void initialize(){
+     void initialize(){
         this.setYear(LocalDate.now().getYear());
         this.setMonth(LocalDate.now().getMonthValue());
         this.setDay(LocalDate.now().getDayOfMonth());
@@ -88,6 +88,7 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
     }
 
     public List<Measurement1> getAllForPreviousHour(){
+
         this.setHour(this.getHour() - 1);
         LocalDateTime time = LocalDateTime.of(this.getYear(),
                 this.getMonth(),
@@ -108,6 +109,42 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
                 0);
         return this.getAllForTheHour(time);
     }
+
+
+
+
+    public List<Measurement1> getAllForTheHourMinutes(LocalDateTime time) {
+        this.setYear(time.getYear());
+        this.setMonth(time.getMonthValue());
+        this.setDay(time.getDayOfMonth());
+        this.setHour(time.getHour());
+        LocalDateTime start = time;
+        LocalDateTime finish = time.withHour(this.getHour() +1);
+
+        List<Measurement1> listSeconds = repository.findAllByDateTimeBetween(start, finish);
+
+        List<Measurement1> list = new ArrayList<>();
+
+        listSeconds.stream().mapToInt(item -> item.getDateTime().getMinute())
+                .distinct().sorted().
+                forEach(minute ->{
+                    int value = (int)  listSeconds.stream()
+                            .filter(el-> el.getDateTime().getMinute() == minute)
+                            .mapToDouble( mes -> mes.getPick())
+                            .average().orElse(0);
+
+                    LocalDateTime date = start.withMinute(minute).withSecond(0);
+
+                    Measurement1 avg = new Measurement1(date, value);
+
+                    list.add(avg);
+        });
+        return list;
+    }
+
+
+
+
 
     public int getYear() {
         return year;
@@ -140,4 +177,12 @@ public class Measurement1ServiceImpl implements IMeasurement1Service {
     public void setHour(int hour) {
         this.hour = hour;
     }
+
+    public String getHourInterval(){
+        return "" + this.getYear() + "-" + this.getMonth()
+                + "-" + this.getDay() + "        " + this.getHour()
+                + ".00 "
+                + " - " + (this.getHour()+1) + ".00";
+    }
+
 }

@@ -20,9 +20,6 @@
     <a href="/measure/list/hour/next" type="button" > Next </a>
     <br>
     <br>
-    <a href="/measure/list/pick/minutes" type="button" > _____ Усреднить до минуты __ </a>
-    <br>
-    <br>
     <div>
 
         <table border="3" bgcolor="#f0f8ff">

@@ -9,18 +9,43 @@
 </head>
 <body>
 
-    <h3>Измерения за  час - </h3>
+
+
+<div>
+    <fieldset>
+        <legend>Bыбрать время</legend>
+        <form name="time" action="" method="POST">
+            Year:<@spring.formInput "inputForm.year" "" "text"/>
+            <br>
+            Month:<@spring.formInput "inputForm.month" "" "text"/>
+            <br>
+            Day:<@spring.formInput "inputForm.day" "" "text"/>
+            <br>
+            Hour:<@spring.formInput "inputForm.hour" "" "text"/>
+            <br>
+            <input type="submit" value="Ok"/>
+        </form>
+    </fieldset>
+</div>
+
+
+
+
+
+
+    <h3>Измерения за  1 час -  _  </h3>
 
 
     <h3>${interval}</h3>
 
     <br>
-    <a href="/measure/list/hour/previous" type="button" > Previous </a>
+
+    <a href="/web/measure/list/hour/previous" type="button" > Previous </a>
      ______________________
-    <a href="/measure/list/hour/next" type="button" > Next </a>
+    <a href="/web/measure/list/hour/next" type="button" > Next </a>
     <br>
     <br>
-    <a href="/measure/list/pick/minutes" type="button" > _____ Усреднить до минуты __ </a>
+    <#--<a href="/web/measure/list/pick/minutes" type="button" > _____ Усреднить до минуты __ </a>-->
     <br>
     <br>
     <div>

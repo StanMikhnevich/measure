@@ -4,10 +4,7 @@ package pro.com.measure.controller.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.com.measure.form.InputHourForm;
 import pro.com.measure.model.Measurement1;
 import pro.com.measure.service.measurement1.impls.Measurement1ServiceImpl;
@@ -27,25 +24,34 @@ public class Measurement1WEBController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     String showAll(Model model){
 
+
         model.addAttribute("measures", service.getAll());
-        System.out.println("CALLED");
+
+      //  System.out.println("CALLED");
         return "list";
     }
 
     @RequestMapping(value = "/list/hour/current", method = RequestMethod.GET)
     String showCurrentHour(Model model){
         model.addAttribute("measures", service.getAllForTheCurrentHour());
+        String interval = this.service.getHourInterval();
+        model.addAttribute("interval", interval);
         return "list";
     }
     @RequestMapping(value = "/list/hour/previous", method = RequestMethod.GET)
     String showPreviousHour(Model model){
+
         model.addAttribute("measures", service.getAllForPreviousHour());
+        String interval = this.service.getHourInterval();
+        model.addAttribute("interval", interval);
         return "list";
     }
 
     @RequestMapping(value = "/list/hour/next", method = RequestMethod.GET)
     String showNextHour(Model model){
         model.addAttribute("measures", service.getAllForNextHour());
+        String interval = this.service.getHourInterval();
+        model.addAttribute("interval", interval);
         return "list";
     }
 
@@ -84,8 +90,65 @@ public class Measurement1WEBController {
                 LocalDateTime.now().getHour()
         );
         model.addAttribute("inputForm", inputHourForm);
+
         return "pickanhour";
     }
+@RequestMapping(value = "/list/pick", method = RequestMethod.POST)
+    public String getDataForHour(Model model,
+                       @ModelAttribute("inputForm") InputHourForm inputForm)
+    {
+        System.out.println(inputForm);
+        LocalDateTime time = LocalDateTime.of(
+          inputForm.getYear(),
+          inputForm.getMonth(),
+          inputForm.getDay(),
+          inputForm.getHour(),
+          0,
+          0
+        );
+        List<Measurement1> measures = this.service.getAllForTheHour(time);
+         model.addAttribute("measures", measures);
+        String interval = this.service.getHourInterval();
+        model.addAttribute("interval", interval);
+        return "list";
+    }
+//--------------------------  mINUTES --------------------------------
+
+
+
+    @RequestMapping(value = "/list/pick/minutes", method = RequestMethod.GET)
+    public String pickHourMinutes(Model model)
+    {
+        InputHourForm inputHourForm = new InputHourForm(
+                LocalDateTime.now().getYear(),
+                LocalDateTime.now().getMonthValue(),
+                LocalDateTime.now().getDayOfMonth(),
+                LocalDateTime.now().getHour()
+        );
+        model.addAttribute("inputForm", inputHourForm);
+
+        return "pickanhour";
+    }
+    @RequestMapping(value = "/list/pick/minutes", method = RequestMethod.POST)
+    public String getDataForHourMinutes(Model model,
+                                 @ModelAttribute("inputForm") InputHourForm inputForm)
+    {
+        System.out.println(inputForm);
+        LocalDateTime time = LocalDateTime.of(
+                inputForm.getYear(),
+                inputForm.getMonth(),
+                inputForm.getDay(),
+                inputForm.getHour(),
+                0,
+                0
+        );
+        List<Measurement1> measures = this.service.getAllForTheHourMinutes(time);
+        model.addAttribute("measures", measures);
+        String interval = this.service.getHourInterval();
+        model.addAttribute("interval", interval);
+        return "list";
+    }
+
 
 
 

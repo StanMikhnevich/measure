@@ -11,12 +11,15 @@
 
 <div>
     <fieldset>
-        <legend>выбрать время</legend>
+        <legend>Bыбрать время</legend>
         <form name="time" action="" method="POST">
-            First name:<@spring.formInput "inputHourForm.year" "" "text"/>
-            First name:<@spring.formInput "inputHourForm.month" "" "text"/>
-            First name:<@spring.formInput "inputHourForm.day" "" "text"/>
-            First name:<@spring.formInput "inputHourForm.hour" "" "text"/>
+            Year:<@spring.formInput "inputForm.year" "" "text"/>
+            <br>
+            Month:<@spring.formInput "inputForm.month" "" "text"/>
+            <br>
+            Day:<@spring.formInput "inputForm.day" "" "text"/>
+            <br>
+            Hour:<@spring.formInput "inputForm.hour" "" "text"/>
             <br>
             <input type="submit" value="Ok"/>
         </form>
