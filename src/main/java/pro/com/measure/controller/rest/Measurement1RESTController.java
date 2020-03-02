@@ -52,19 +52,21 @@ public class Measurement1RESTController {
     }
 
     // returns data  between  two  dates
-    @RequestMapping(value = "/list/{fromyear}/{frommonth}/{fromday}/{fromhour}/{toyear}/{tomonth}/{today}/{tohour}", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/{fromyear}/{frommonth}/{fromday}/{fromhour}/{fromminute}/{toyear}/{tomonth}/{today}/{tohour}/{tominute}", method = RequestMethod.GET)
     List<Measurement1>  showForPeriod(
             @PathVariable(value = "fromyear")int year
             , @PathVariable(value = "frommonth")int month
             , @PathVariable(value = "fromday")int day
             , @PathVariable(value = "fromhour")int hour
+            , @PathVariable(value = "fromminute")int minute
             , @PathVariable(value = "toyear")int toYear
             , @PathVariable(value = "tomonth")int toMonth
             , @PathVariable(value = "today")int toDay
             , @PathVariable(value = "tohour")int toHour
+            , @PathVariable(value = "tominute")int toMinute
     ){
-        LocalDateTime start = LocalDateTime.of(year,month,day,hour,0,0);
-        LocalDateTime finish = LocalDateTime.of(toYear,toMonth,toDay,toHour ,0,0);
+        LocalDateTime start = LocalDateTime.of(year,month,day,hour,minute,0);
+        LocalDateTime finish = LocalDateTime.of(toYear,toMonth,toDay,toHour,toMinute,0);
         return service.getAllForThePeriod(start,finish);
     }
 }
